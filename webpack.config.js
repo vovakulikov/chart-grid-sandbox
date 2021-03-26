@@ -67,7 +67,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new ReactRefreshPlugin(),
+    new ReactRefreshPlugin({
+      overlay: false
+    }),
     new HtmlWebpackPlugin({
       template: './web/index.html'
     }),

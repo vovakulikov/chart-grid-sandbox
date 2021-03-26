@@ -1,0 +1,86 @@
+:global {
+  @import 'react-grid-layout/css/styles';
+  @import 'react-resizable/css/styles';
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  font-family: sans-serif;
+}
+
+.element {
+  padding: 20px;
+}
+
+.chartWrapper {
+  width: 500px;
+  height: 300px;
+}
+
+.chart {
+  width: 100%;
+  height: 100%;
+}
+
+.grid {
+  max-width: 800px;
+  padding: 10px;
+  border: 1px solid whitesmoke;
+
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    cursor: default;
+
+    background-color: whitesmoke;
+  }
+
+  &__item-title {
+    margin-bottom: 16px;
+  }
+
+  &__item-chart {
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  &__item-inner-wrapper-chart {
+    position: absolute;
+    left:0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+:global(.react-resizable-handle) {
+  background: none;
+  cursor: nwse-resize;
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+
+  // Visual handle
+  &::after {
+    content: '';
+    display: block;
+    right: 0.25rem;
+    bottom: 0.25rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+  }
+}

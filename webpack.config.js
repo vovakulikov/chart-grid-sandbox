@@ -15,7 +15,10 @@ module.exports = {
   target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
   mode: "development",
   devtool: 'source-map',
-  resolve: { extensions: [".ts", ".tsx", ".js", ".jsx",] },
+  resolve: {
+    alias: { react: require.resolve("react") },
+    extensions: [".ts", ".tsx", ".js", ".jsx",]
+  },
   module: {
     rules: [
       {

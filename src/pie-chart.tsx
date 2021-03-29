@@ -2,7 +2,7 @@ import React from 'react';
 import Pie, { ProvidedProps, PieArcDatum } from '@visx/shape/lib/shapes/Pie';
 import { scaleOrdinal } from '@visx/scale';
 import { Group } from '@visx/group';
-import { Annotation, Connector, Label } from '@visx/annotation';
+import { Annotation, Connector, Label } from '@visx/annotation/packages/visx-annotation/src';
 import browserUsage, { BrowserUsage as Browsers } from '@visx/mock-data/lib/mocks/browserUsage';
 import { Arc as ArcType } from "d3-shape";
 

@@ -2,8 +2,7 @@ import React from 'react';
 import Pie, { ProvidedProps, PieArcDatum } from '@visx/shape/lib/shapes/Pie';
 import { scaleOrdinal } from '@visx/scale';
 import { Group } from '@visx/group';
-// import { Annotation, Connector, Label } from '../annotation';
-import { Annotation, Connector, Label } from '@visx/annotation/src';
+import { Annotation, Connector, Label } from '@visx/annotation';
 import browserUsage, { BrowserUsage as Browsers } from '@visx/mock-data/lib/mocks/browserUsage';
 import { Arc as ArcType } from "d3-shape";
 
@@ -140,29 +139,27 @@ function PieArc<Datum>(props: PieArcProps<Datum>) {
 	
 	return (
 		<g>
-			<a href={`https://www.google.com/search?q=${getKey(arc)}`}>
-				<path
-					d={pathValue}
-					fill={getColor(arc)}
-					stroke={'white'}
-					strokeWidth={1}
-				/>
-				<Annotation
-					x={surfaceX}
-					y={surfaceY}
-					dx={labelX}
-					dy={labelY}
-				>
-					<Connector type={"line"} />
-					<Label
-						showBackground={false}
-						showAnchorLine={false}
-						title={getKey(arc)}
-						subtitle={`${arc.value}%`} />
-				</Annotation>
-				
-				<circle r={4} fill={'black'} cx={surfaceX + labelX} cy={surfaceY + labelY}/>
-			</a>
+			<path
+				d={pathValue}
+				fill={getColor(arc)}
+				stroke={'white'}
+				strokeWidth={1}
+			/>
+			<Annotation
+				x={surfaceX}
+				y={surfaceY}
+				dx={labelX}
+				dy={labelY}
+			>
+				<Connector type={"line"} />
+				<Label
+					showBackground={false}
+					showAnchorLine={false}
+					title={getKey(arc)}
+					subtitle={`${arc.value}%`} />
+			</Annotation>
+			
+			<circle r={4} fill={'black'} cx={surfaceX + labelX} cy={surfaceY + labelY}/>
 		</g>
 	);
 }

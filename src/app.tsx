@@ -1,10 +1,12 @@
 import React, { ComponentType } from 'react';
+import { Responsive, WidthProvider } from 'react-grid-layout'
+
 import { BarGraph } from './chart/bar-chart';
 import { Theshold } from './chart/threshold';
 import { ParentSizeModern as ParentSize } from '@visx/responsive';
 import { BarStack } from './chart/bar-stack';
+import { PieExample } from './insight-chart/pie-chart'
 
-import { Responsive, WidthProvider } from 'react-grid-layout'
 import { breakpoints, columns, viewsToReactGridLayouts } from './grid/helpers'
 
 import styles from './index.scss';
@@ -20,6 +22,15 @@ const VIEWS = [
   { id: 'Second chart - threshold', type: 'threshold' },
   { id: 'Fourth chart - bar stack with tooltip', type: 'bar-stack' },
 ];
+
+export function App3() {
+  
+  return (
+    <div className={styles.element}>
+      <PieExample width={550} height={350} animate={false}/>
+    </div>
+  )
+}
 
 export function App2() {
   return (
@@ -54,14 +65,14 @@ function getChart(type: string): ComponentType<ChartCommonProps> {
   return BarGraph;
 }
 
-function SizeRender(props: {width: number; height: number}) {
-  return (
-    <div>
-      width: { props.width }
-      height: { props.height }
-    </div>
-  );
-}
+// function SizeRender(props: {width: number; height: number}) {
+//   return (
+//     <div>
+//       width: { props.width }
+//       height: { props.height }
+//     </div>
+//   );
+// }
 
 export function App () {
   

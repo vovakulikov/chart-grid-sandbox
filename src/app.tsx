@@ -6,6 +6,7 @@ import { Theshold } from './chart/threshold';
 import { ParentSizeModern as ParentSize } from '@visx/responsive';
 import { BarStack } from './chart/bar-stack';
 import { PieExample } from './insight-chart/pie-chart'
+import { XYChartExample } from "./chart/xychart";
 
 import { breakpoints, columns, viewsToReactGridLayouts } from './grid/helpers'
 
@@ -21,16 +22,19 @@ const VIEWS = [
   { id: 'First bar chart', type: 'bar' },
   { id: 'Second chart - threshold', type: 'threshold' },
   { id: 'Fourth chart - bar stack with tooltip', type: 'bar-stack' },
+  { id: 'Fifth chart - xy chart with tooltip', type: 'xy-chart' },
+  { id: 'Sixth chart - simple pie chart', type: 'pie' },
 ];
 
 export function App3() {
   
   return (
     <div className={styles.element}>
-      <PieExample width={550} height={350} animate={false}/>
+      <XYChartExample width={550} height={350}/>
     </div>
   )
 }
+
 
 export function App2() {
   return (
@@ -60,19 +64,21 @@ function getChart(type: string): ComponentType<ChartCommonProps> {
     case 'bar': return BarGraph;
     case 'threshold': return Theshold;
     case 'bar-stack': return BarStack;
+    case 'xy-chart': return XYChartExample
+    case 'pie': return PieExample
   }
   
   return BarGraph;
 }
 
-// function SizeRender(props: {width: number; height: number}) {
-//   return (
-//     <div>
-//       width: { props.width }
-//       height: { props.height }
-//     </div>
-//   );
-// }
+export function SizeRender(props: {width: number; height: number}) {
+  return (
+    <div>
+      width: { props.width }
+      height: { props.height }
+    </div>
+  );
+}
 
 export function App () {
   

@@ -70,6 +70,7 @@
     "@visx/shape": "^1.7.0",
     "@visx/threshold": "^1.7.0",
     "@visx/tooltip": "^1.7.2",
+    "@visx/xychart": "^1.7.2",
     "d3-time-format": "^3.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",

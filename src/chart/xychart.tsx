@@ -8,7 +8,7 @@ import {
 	XYChart,
 	lightTheme,
 } from '@visx/xychart';
-import { curveCardinal, curveLinear, curveStep } from "@visx/curve";
+import {curveBasis, curveCardinal, curveLinear, curveStep} from "@visx/curve";
 import cityTemperature, { CityTemperature } from '@visx/mock-data/lib/mocks/cityTemperature';
 
 import {GlyphProps} from "@visx/xychart/lib/types";
@@ -22,22 +22,6 @@ export type XYChartProps = {
 
 type City = 'San Francisco' | 'New York' | 'Austin';
 
-// Data and const
-const data = cityTemperature.slice(225, 275);
-const defaultAnnotationDataIndex = 13;
-const selectedDatumPatternId = 'xychart-selected-datum';
-const numTicks = 4;
-const margin = { top: 10, left: 50, bottom: 30, right: 30 };
-
-// Configuration
-const dateScaleConfig = { type: 'band', paddingInner: 0.3 } as const;
-const temperatureScaleConfig = { type: 'linear' } as const;
-
-const config = {
-	x: dateScaleConfig,
-	y: temperatureScaleConfig,
-};
-
 // Accessors
 type Accessor = (d: CityTemperature) => number | string;
 
@@ -49,7 +33,7 @@ interface Accessors {
 
 type DataKey = keyof Accessors;
 
-const getDate = (d: CityTemperature) => d.date;
+const getDate = (d: CityTemperature) => +(new Date(d.date));
 const getSfTemperature = (d: CityTemperature) => Number(d['San Francisco']);
 const getNyTemperature = (d: CityTemperature) => Number(d['New York']);
 const getAustinTemperature = (d: CityTemperature) => Number(d.Austin);
@@ -68,6 +52,52 @@ const accessors = {
 	date: getDate,
 }
 
+// Data and const
+const data = cityTemperature.slice(225, 275);
+
+const defaultAnnotationDataIndex = 13;
+const selectedDatumPatternId = 'xychart-selected-datum';
+const numTicks = 4;
+const margin = { top: 10, left: 50, bottom: 30, right: 30 };
+
+// Configuration
+
+export function pad([x0, x1]:number[], k: number) {
+	var dx = (x1 - x0) * k / 2;
+
+	return [x0 - dx, x1 + dx];
+}
+
+const getMinAndMax = (data: CityTemperature[], accessors: Accessors ) => {
+	const keys = Object.keys(accessors) as DataKey[];
+	
+	const resultArray = data.reduce<Array<number>>((memo, item) => {
+		for (let key of keys) {
+			const accessor = accessors[key as DataKey];
+			
+			memo.push(+accessor(item))
+		}
+		
+		return memo;
+	}, []);
+	
+	return [Math.min(...resultArray), Math.max(...resultArray)]
+}
+
+const dateScaleConfig = { type: 'time', paddingInner: 0.3, nice: false } as const;
+
+const temperatureScaleConfig = {
+	type: 'linear',
+	domain: pad(getMinAndMax(data, accessors.y), 0.5),
+	nice: true,
+	zero: false,
+} as const;
+
+const config = {
+	x: dateScaleConfig,
+	y: temperatureScaleConfig,
+};
+
 export function XYChartExample({ width, height }: XYChartProps) {
 	const [annotationDataKey, setAnnotationDataKey] = useState<DataKey | null>(null);
 	const [annotationDataIndex, setAnnotationDataIndex] = useState(defaultAnnotationDataIndex);
@@ -77,8 +107,7 @@ export function XYChartExample({ width, height }: XYChartProps) {
 	const [glyphComponent, setGlyphComponent] = useState<'star' | 'cross' | 'circle' | '🍍'>('circle');
 	
 	// derived
-	const curve = (curveType === 'cardinal' && curveCardinal) ||
-		(curveType === 'step' && curveStep) || curveLinear;
+	const curve = curveLinear; //(curveType === 'cardinal' && curveCardinal) || (curveType === 'step' && curveStep) || curveLinear;
 	const annotationDatum = data[annotationDataIndex];
 	const glyphOutline = 'white'; // any color
 	
@@ -117,7 +146,7 @@ export function XYChartExample({ width, height }: XYChartProps) {
 			theme={lightTheme}
 			xScale={config.x}
 			yScale={config.y}
-			height={Math.min(400, height)}
+			height={height}
 			width={width}
 			captureEvents={true}
 			margin={margin}
@@ -164,18 +193,27 @@ export function XYChartExample({ width, height }: XYChartProps) {
 			/>
 			<Axis
 				orientation={'bottom'}
-				numTicks={numTicks}
+				strokeWidth={2}
+				stroke={'black'}
+				tickStroke={'black'}
+				tickClassName={'ticks'}
+				tickLabelProps={() => ({ fill: 'black' })}
 			/>
 			<Axis
 				label={'Temperature (°F)'}
 				orientation={'left'}
 				numTicks={numTicks}
+				strokeWidth={2}
+				stroke={'black'}
+				tickStroke={'black'}
+				tickClassName={'ticks'}
+				tickLabelProps={() => ({ fill: 'black' })}
 			/>
 			
 			<Tooltip<CityTemperature>
 				showHorizontalCrosshair={false}
 				showVerticalCrosshair={true}
-				snapTooltipToDatumX={true}
+				snapTooltipToDatumX={false}
 				snapTooltipToDatumY={true}
 				showDatumGlyph={true}
 				showSeriesGlyphs={true}
@@ -183,7 +221,7 @@ export function XYChartExample({ width, height }: XYChartProps) {
 					<>
 						{/** date */}
 						{(tooltipData?.nearestDatum?.datum &&
-							accessors.date(tooltipData?.nearestDatum?.datum)) ||
+							new Date(accessors.date(tooltipData?.nearestDatum?.datum)).toDateString()) ||
 						'No date'}
 						<br />
 						<br />
@@ -199,7 +237,7 @@ export function XYChartExample({ width, height }: XYChartProps) {
 								);
 							
 							return (
-								<div key={city}>
+								<div style={{ marginBottom: 4 }} key={city}>
 									<em
 										style={{
 											color: colorScale?.(city),

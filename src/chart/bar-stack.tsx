@@ -66,10 +66,12 @@ const dateScale = scaleBand<string>({
   domain: data.map(getDate),
   padding: 0.2,
 });
+
 const temperatureScale = scaleLinear<number>({
   domain: [0, Math.max(...temperatureTotals)],
   nice: true,
 });
+
 const colorScale = scaleOrdinal<CityName, string>({
   domain: keys,
   range: [purple1, purple2, purple3],

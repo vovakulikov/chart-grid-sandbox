@@ -3,6 +3,7 @@ import { Responsive, WidthProvider } from 'react-grid-layout'
 
 import { BarGraph } from './chart/bar-chart';
 import { Theshold } from './chart/threshold';
+import Another from './chart/another';
 import { ParentSizeModern as ParentSize } from '@visx/responsive';
 import { BarStack } from './chart/bar-stack';
 import { PieExample } from './insight-chart/pie-chart'
@@ -11,6 +12,7 @@ import { XYChartExample } from "./chart/xychart";
 import { breakpoints, columns, viewsToReactGridLayouts } from './grid/helpers'
 
 import styles from './index.scss';
+import {BarChart} from "./insight-chart/bar-chart";
 
 
 // TODO use a method to get width that also triggers when file explorer is closed
@@ -30,7 +32,7 @@ export function App3() {
   
   return (
     <div className={styles.element}>
-      <XYChartExample width={550} height={350}/>
+      <BarChart width={550} height={350}/>
     </div>
   )
 }
@@ -61,8 +63,8 @@ type ChartCommonProps = {
 
 function getChart(type: string): ComponentType<ChartCommonProps> {
   switch (type) {
-    case 'bar': return BarGraph;
-    case 'threshold': return Theshold;
+    case 'bar': return BarChart;
+    case 'threshold': return Another;
     case 'bar-stack': return BarStack;
     case 'xy-chart': return XYChartExample
     case 'pie': return PieExample

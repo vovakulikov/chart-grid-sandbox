@@ -60,7 +60,6 @@ export function PieExample(props: PieProps) {
 	const radius = Math.min(innerWidth, innerHeight) / 3;
 	const centerY = innerHeight / 2;
 	const centerX = innerWidth / 2;
-	// const donutThickness = 50;
 	
 	return (
 		<svg width={width} height={height}>

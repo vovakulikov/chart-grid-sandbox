@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { letterFrequency } from '@visx/mock-data';
+import { AxisBottom } from '@visx/axis';
 import { Group } from '@visx/group';
 import { Bar } from '@visx/shape';
 import { scaleLinear, scaleBand } from '@visx/scale';
@@ -67,6 +68,7 @@ export function BarGraph(props: Props) {
     <svg width={width} height={height}>
       {data.map((d, i) => {
         const barHeight = yMax - (yPoint(d) ?? 0);
+        
         return (
           <Group key={`bar-${i}`}>
             <Bar

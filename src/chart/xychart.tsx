@@ -113,13 +113,6 @@ export function XYChartExample({ width, height }: XYChartProps) {
 	
 	// Callbacks
 	// for series that support it, return a colorAccessor which returns a custom color if the datum is selected
-	const colorAccessorFactory = useCallback(
-		(dataKey: DataKey) => (d: CityTemperature) =>
-			annotationDataKey === dataKey && d === data[annotationDataIndex]
-				? `url(#${selectedDatumPatternId})`
-				: null,
-		[annotationDataIndex, annotationDataKey],
-	);
 	const renderGlyph = useCallback(
 		({ x, y, size, color, onPointerMove, onPointerOut, onPointerUp }: GlyphProps<CityTemperature>) => {
 			const handlers = { onPointerMove, onPointerOut, onPointerUp };
@@ -175,22 +168,25 @@ export function XYChartExample({ width, height }: XYChartProps) {
 				yAccessor={accessors.y['New York']}
 				curve={curve}
 			/>
-			<LineSeries
-				dataKey="San Francisco"
-				data={data}
-				xAccessor={accessors.x['San Francisco']}
-				yAccessor={accessors.y['San Francisco']}
-				curve={curve}
-			/>
 			
-			<GlyphSeries
-				dataKey="San Francisco"
-				data={data}
-				xAccessor={accessors.x['San Francisco']}
-				yAccessor={accessors.y['San Francisco']}
-				renderGlyph={renderGlyph}
-				colorAccessor={colorAccessorFactory('San Francisco')}
-			/>
+			<g>
+				<LineSeries
+					dataKey="San Francisco"
+					data={data}
+					xAccessor={accessors.x['San Francisco']}
+					yAccessor={accessors.y['San Francisco']}
+					curve={curve}
+				/>
+				
+				<GlyphSeries
+					dataKey="San Francisco"
+					data={data}
+					xAccessor={accessors.x['San Francisco']}
+					yAccessor={accessors.y['San Francisco']}
+					renderGlyph={renderGlyph}
+				/>
+			</g>
+			
 			<Axis
 				orientation={'bottom'}
 				strokeWidth={2}

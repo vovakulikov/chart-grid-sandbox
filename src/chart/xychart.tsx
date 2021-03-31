@@ -8,7 +8,7 @@ import {
 	XYChart,
 	lightTheme,
 } from '@visx/xychart';
-import {curveBasis, curveCardinal, curveLinear, curveStep} from "@visx/curve";
+import {curveLinear} from "@visx/curve";
 import cityTemperature, { CityTemperature } from '@visx/mock-data/lib/mocks/cityTemperature';
 
 import {GlyphProps} from "@visx/xychart/lib/types";

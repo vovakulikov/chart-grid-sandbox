@@ -108,15 +108,11 @@ export function App () {
                     <h3 className={styles['grid__item-title']}>{id}</h3>
                   
                     <div className={styles['grid__item-chart']}>
-                      
-                      <div className={styles['grid__item-inner-wrapper-chart']}>
-
-                        <ParentSize>
-                          { (parent) => <Chart width={parent.width} height={parent.height} />}
-                        </ParentSize>
-                      </div>
+  
+                      <ParentSize className={styles['grid__item-inner-wrapper-chart']}>
+                        { (parent) => <Chart width={parent.width} height={parent.height} />}
+                      </ParentSize>
                     </div>
-                   
                 </div>
               );
             })

@@ -47,56 +47,54 @@ export function Theshold({ width, height, margin = defaultMargin }: ThresholdPro
   temperatureScale.range([yMax, 0]);
   
   return (
-    <div>
-      <svg width={width} height={height}>
-        {/*<rect x={0} y={0} width={width} height={height} fill={background} rx={14} />*/}
-        <Group left={left} top={top}>
-          <GridRows scale={temperatureScale} width={xMax} height={yMax} stroke="#e0e0e0" />
-          <GridColumns scale={timeScale} width={xMax} height={yMax} stroke="#e0e0e0" />
-          <line x1={xMax} x2={xMax} y1={0} y2={yMax} stroke="#e0e0e0" />
-          <AxisBottom top={yMax} scale={timeScale} numTicks={width > 520 ? 10 : 5} />
-          <AxisLeft scale={temperatureScale} />
-          <text x="-70" y="15" transform="rotate(-90)" fontSize={10}>
-            Temperature (°F)
-          </text>
-          <Threshold<CityTemperature>
-            id={`${Math.random()}`}
-            data={cityTemperature}
-            x={d => timeScale(date(d))}
-            y0={d => temperatureScale(ny(d))}
-            y1={d => temperatureScale(sf(d))}
-            clipAboveTo={0}
-            clipBelowTo={yMax}
-            curve={curveBasis}
-            belowAreaProps={{
-              fill: 'violet',
-              fillOpacity: 0.4,
-            }}
-            aboveAreaProps={{
-              fill: 'green',
-              fillOpacity: 0.4,
-            }}
-          />
-          <LinePath
-            data={cityTemperature}
-            curve={curveBasis}
-            x={d => timeScale(date(d))}
-            y={d => temperatureScale(sf(d))}
-            stroke="#222"
-            strokeWidth={1.5}
-            strokeOpacity={0.8}
-            strokeDasharray="1,2"
-          />
-          <LinePath
-            data={cityTemperature}
-            curve={curveBasis}
-            x={d => timeScale(date(d))}
-            y={d => temperatureScale(ny(d))}
-            stroke="#222"
-            strokeWidth={1.5}
-          />
-        </Group>
-      </svg>
-    </div>
+    <svg width={width} height={height}>
+      {/*<rect x={0} y={0} width={width} height={height} fill={background} rx={14} />*/}
+      <Group left={left} top={top}>
+        <GridRows scale={temperatureScale} width={xMax} height={yMax} stroke="#e0e0e0" />
+        <GridColumns scale={timeScale} width={xMax} height={yMax} stroke="#e0e0e0" />
+        <line x1={xMax} x2={xMax} y1={0} y2={yMax} stroke="#e0e0e0" />
+        <AxisBottom top={yMax} scale={timeScale} numTicks={width > 520 ? 10 : 5} />
+        <AxisLeft scale={temperatureScale} />
+        <text x="-70" y="15" transform="rotate(-90)" fontSize={10}>
+          Temperature (°F)
+        </text>
+        <Threshold<CityTemperature>
+          id={`${Math.random()}`}
+          data={cityTemperature}
+          x={d => timeScale(date(d))}
+          y0={d => temperatureScale(ny(d))}
+          y1={d => temperatureScale(sf(d))}
+          clipAboveTo={0}
+          clipBelowTo={yMax}
+          curve={curveBasis}
+          belowAreaProps={{
+            fill: 'violet',
+            fillOpacity: 0.4,
+          }}
+          aboveAreaProps={{
+            fill: 'green',
+            fillOpacity: 0.4,
+          }}
+        />
+        <LinePath
+          data={cityTemperature}
+          curve={curveBasis}
+          x={d => timeScale(date(d))}
+          y={d => temperatureScale(sf(d))}
+          stroke="#222"
+          strokeWidth={1.5}
+          strokeOpacity={0.8}
+          strokeDasharray="1,2"
+        />
+        <LinePath
+          data={cityTemperature}
+          curve={curveBasis}
+          x={d => timeScale(date(d))}
+          y={d => temperatureScale(ny(d))}
+          stroke="#222"
+          strokeWidth={1.5}
+        />
+      </Group>
+    </svg>
   );
 }
